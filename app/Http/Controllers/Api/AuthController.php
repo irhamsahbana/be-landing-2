@@ -72,41 +72,48 @@ class AuthController extends Controller
         $fields = $request->all();
 
         $rules = [
-            'is_mentor' => ['required', 'boolean'],
-            'industry_id' => [
-                'required',
-                'uuid',
-                Rule::exists('categories', 'id')->where(function ($query) {
-                    $query->where('group_by', 'industries');
-                })
-            ],
-            'first_name' => ['required_without:last_name', 'string', 'max:255'],
-            'last_name' => ['required_without:first_name', 'string', 'max:255'],
-            'email' => ['required', 'email:rfc,dns'],
-            'country_code' => [
-                'nullable',
-                'integer',
-                'between:1,999',
-            ],
-            'phone' => ['nullable', 'string', 'max:255'],
-            'message' => ['nullable', 'string', 'max:150'],
+            'full_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email:rfc,dns', 'max:255'],
+            'company_name' => ['required', 'string', 'max:255'],
+            'company_website' => ['required', 'string', 'max:255'],
+            'number_of_employees' => ['required', 'integer', 'min:0'],
+            'capital_raised' => ['required', 'string', 'max:255'],
+            'is_generate_revenue' => ['required', 'boolean'],
+            'is_profitable' => ['required', 'boolean'],
+            'business_description' => ['required', 'string', 'max:255'],
+            'file' => ['nullable', 'file', 'mimes:pdf,docx,pptx', 'max:10240'],
         ];
 
         $messages = [
-            'industry_id.required' => 'Please choose one industry.',
+            'full_name.required' => '*name cannot be empty',
+            'email.required' => '*email cannot be empty',
+            'company_name.required' => '*company name cannot be empty',
+            'company_website.required' => '*company website cannot be empty',
+            'number_of_employees.required' => '*employees cannot be empty',
+            'capital_raised.required' => '*capital you need cannot be empty',
+            'is_generate_revenue.required' => '*revenue cannot be empty',
+            'is_profitable.required' => '*profit cannot be empty',
+            'business_description.required' => '*Business description cannot be empty',
 
-            'first_name.required_without' => 'First Name and Last Name cannot be empty.',
-            'last_name.required_without' => 'First Name and Last Name cannot be empty.',
+            'full_name.string' => '*name cannot be empty',
+            'email.string' => '*email cannot be empty',
+            'company_name.string' => '*company name cannot be empty',
+            'company_website.string' => '*company website cannot be empty',
+            'capital_raised.string' => '*capital you need cannot be empty',
+            'business_description.string' => '*Business description cannot be empty',
 
-            'first_name.max' => 'First Name must be less than 255 characters.',
-            'last_name.max' => 'Last Name must be less than 255 characters.',
+            'full_name.max' => '*name cannot be more than 255 characters',
+            'email.max' => '*email cannot be more than 255 characters',
+            'company_name.max' => '*company name cannot be more than 255 characters',
+            'company_website.max' => '*company website cannot be more than 255 characters',
+            'capital_raised.max' => '*capital you need cannot be more than 255 characters',
+            'business_description.max' => '*Business description cannot be more than 255 characters',
 
-            'email.required' => 'Email cannot be empty.',
-            'email.email' => 'Please enter a correct email address.',
+            'email.email' => '*email is not valid',
+            'number_of_employees.integer' => '*employees must be a number',
 
-            'phone.string' => 'Please enter a correct phone number.',
-
-            'message.max' => 'Message cannot be more than 150 characters.',
+            'file.mimes' => '*file must be pdf, docx, pptx',
+            'file.max' => '*file cannot be more than 10MB',
         ];
 
         $validator = Validator::make($fields, $rules, $messages);
@@ -114,30 +121,28 @@ class AuthController extends Controller
         if ($validator->fails())
             return $response->json(null, $validator->errors(), HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
 
-        //remove + in country code
-        if (isset($fields['country_code']))
-            $fields['country_code'] = str_replace('+', '', (string) $fields['country_code']);
-
-        //remove all characters except numbers in phone number
-        if (isset($fields['phone']) && !empty($fields['phone']))
-            $fields['phone'] = preg_replace('/[^0-9]/', '', $fields['phone']);
-
-        //remove phone number and country code if phone number is empty
-        if (empty($fields['phone'])) {
-            unset($fields['phone']);
-            unset($fields['country_code']);
+        // save file
+        $file = $request->file('file');
+        $file_name = null;
+        if ($file) {
+            $file_name = Str::random(10) . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/files', $file_name);
         }
 
         DB::beginTransaction();
         try {
-            $token = Str::uuid()->toString();
-            $fields['token'] = $token;
-            $signup = Signup::create($fields);
-
-            // send email to email address
-            $name = $signup->first_name . ' ' . $signup->last_name;
-            $email = new SendEmailVerificationLink($name, $fields['email'], $token);
-            Mail::to($fields['email'])->send($email);
+            $signup = Signup::create([
+                'full_name' => $fields['full_name'],
+                'email' => $fields['email'],
+                'company_name' => $fields['company_name'],
+                'company_website' => $fields['company_website'],
+                'number_of_employees' => $fields['number_of_employees'],
+                'capital_raised' => $fields['capital_raised'],
+                'is_generate_revenue' => $fields['is_generate_revenue'],
+                'is_profitable' => $fields['is_profitable'],
+                'business_description' => $fields['business_description'],
+                'file' => 'files/'. $file_name,
+            ]);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -145,6 +150,6 @@ class AuthController extends Controller
             return $response->json(null, $e->getMessage(), HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $response->json($signup->toArray(), 'Signup success');
+        return $response->json($signup->toArray(), 'Register success');
     }
 }

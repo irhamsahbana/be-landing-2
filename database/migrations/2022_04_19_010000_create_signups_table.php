@@ -15,16 +15,16 @@ return new class extends Migration
     {
         Schema::create('signups', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('industry_id')->nullable();
-            $table->string('first_name');
-            $table->string('last_name');
+            $table->string('full_name');
             $table->string('email');
-            $table->string('phone')->nullable();
-            $table->string('country_code')->nullable();
-            $table->boolean('is_mentor');
-            $table->string('message')->nullable();
-            $table->string('token')->nullable();
-            $table->dateTime('verified_at')->nullable();
+            $table->string('company_name');
+            $table->string('company_website');
+            $table->integer('number_of_employees');
+            $table->string('capital_raised');
+            $table->boolean('is_generate_revenue')->default(false);
+            $table->boolean('is_profitable')->default(false);
+            $table->string('business_description');
+            $table->string('file')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
