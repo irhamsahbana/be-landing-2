@@ -1,0 +1,24 @@
+ID,CATEGORY_ID,NAME,LABEL,NOTES,GROUP_BY
+8bbfbe57-c52a-484e-8d58-4a79f7e1e6a4,,engineering,Engineering,,industries
+c9475bf2-715e-47d7-8ef7-1ef7d7ebf080,,enterpreneurship,Enterpreneurship,,industries
+c861f0b0-7440-48e4-8176-0f032264be8f,,finance,Finance,,industries
+8c7cf34e-94ae-464a-98f8-4823a9a33d18,,law,Law,,industries
+d6e2d412-b46d-44e2-9bf5-570eeec548af,,marketing,Marketing,,industries
+246ca903-c2b8-4b34-b90d-fb965d553bfd,,medicine,Medicine,,industries
+a1c7af70-e4ba-4512-8f4e-4902883b68ee,,politics,Politics,,industries
+78e1220a-33a0-4c6b-83d2-e6b44285694b,,technology,Technology,,industries
+59c6280f-7db1-4643-b1f3-3541a844819e,,administrator,Administrator,Administrator,people
+44ad8a4e-7470-4311-a3dd-79264c9eff98,,customer,Customer,Customer,people
+ab4e75c4-e045-40b3-b95a-92dfdfc798a6,,administrator,Administrator,Administrator,permission_groups
+6a3b3f6e-1e54-4714-8a13-3d4b55a2f44b,,access-right-create,Access Right - Create,Access Right - Create,permissions
+9c6e4815-44b6-4552-a117-4e93b97117c8,,access-right-delete,Access Right -Delete,Access Right - Delete,permissions
+a2c14ded-f748-44b9-ad9c-9be56cc17d91,,access-right-read,Access Right - Read,Access Right - Read,permissions
+e91cf70b-d10b-48af-8473-e7a1100c04be,,access-right-update,Access Right - Update,Access Right - Update,permissions
+fd403a13-2310-492b-95bc-ceadf925705d,,category-industries-create,Industry Category - Create,Industry Category - Create,permissions
+e69e3b71-a5c1-4849-8e02-566a7633c265,,category-industries-delete,Industry Category - Delete,Industry Category - Delete,permissions
+6537fee3-12d3-488a-8c4a-9d93f7ede744,,category-industries-read,Industry Category - Read,Industry Category - Read,permissions
+6a1e10d8-af2d-4e61-904e-0195e27a0420,,category-industries-update,Industry Category - Update,Industry Category - Update,permissions
+ec6eb894-8d89-442b-994b-291a2c827b64,,sign-up-create,Sign Up - Create,Sign Up - Create,permissions
+3b880c82-e2b3-4418-b1f7-c6c913298e97,,sign-up-delete,Sign Up - Delete,Sign Up - Delete,permissions
+866da333-5697-4def-befa-7fa0bd0911a8,,sign-up-read,Sign Up - Read,Sign Up - Read,permissions
+97ddb2de-2bf4-43cd-b580-711de916854b,,sign-up-update,Sign Up - Update,Sign Up - Update,permissions
