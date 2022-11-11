@@ -69,7 +69,7 @@ class AuthController extends Controller
     public function signup(Request $request)
     {
         // allow csrf token
-        $request->headers->set('X-CSRF-TOKEN', $request->cookie('XSRF-TOKEN'));
+        $request->headers->set('X-CSRF-TOKEN', csrf_token());
         $response = new Response();
         $fields = $request->all();
 
