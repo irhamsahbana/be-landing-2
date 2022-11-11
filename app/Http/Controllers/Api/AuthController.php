@@ -142,7 +142,7 @@ class AuthController extends Controller
                 'is_generate_revenue' => $fields['is_generate_revenue'],
                 'is_profitable' => $fields['is_profitable'],
                 'business_description' => $fields['business_description'],
-                'file' => 'files/'. $file_name,
+                'file' => $file_name ? 'files/' . $file_name : null,
             ]);
 
             DB::commit();
