@@ -7,7 +7,7 @@
     // $hasAccessDelete = Auth::user()->hasAccess('course-master-delete');
 @endphp
 
-@section('content-header', 'Sign Up list')
+@section('content-header', 'Register list')
 
 @section('content')
     <x-content>
@@ -21,18 +21,24 @@
                     </x-col>
 
                     <x-col>
-                        <x-table :thead="['First Name', 'Last Name', 'Email', 'Phone', 'Industry', 'Message', 'Created At', 'Verified At'/*'Action'*/]">
+                        <x-table :thead="['Full Name', 'Email', 'Company Name', 'Employees', 'Capital Need', 'Generate Revenue', 'Profitable', 'Description', 'File', 'Created At', /*'Action'*/]">
                             @foreach($data as $row)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $row->first_name }}</td>
-                                    <td>{{ $row->last_name }}</td>
+                                    <td>{{ $row->full_name }}</td>
                                     <td>{{ $row->email }}</td>
-                                    <td>{{ "{$row->country_code} {$row->phone}" }}</td>
-                                    <td>{{ $row->industry->label }}</td>
-                                    <td>{{ $row->message }}</td>
+                                    <td>{{ $row->company_name }}</td>
+                                    <td>{{ $row->number_of_employees }}</td>
+                                    <td>{{ $row->capital_raised }}</td>
+                                    <td>{{ $row->is_generate_revenue ? 'Yes' : 'No' }}</td>
+                                    <td>{{ $row->is_profitable ? 'Yes' : 'No' }}</td>
+                                    <td>{{ $row->business_description }}</td>
+                                    @if($row->file)
+                                        <td><a href="{{ route('signup.download', ['path' => $row->file]) }}">Download</a></td>
+                                    @else
+                                        <td></td>
+                                    @endif
                                     <td>{{ \Carbon\Carbon::parse($row->created_at)->timezone('Europe/London')->format('M d Y H:i:s') }}</td>
-                                    <td>{{ $row->verified_at ? \Carbon\Carbon::parse($row->verified_at)->timezone('Europe/London')->format('M d Y H:i:s') : '-' }}</td>
                                     {{-- <td>
                                         @if($hasAccessRead)
                                             <a

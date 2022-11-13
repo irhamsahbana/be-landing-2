@@ -127,7 +127,7 @@ class AuthController extends Controller
         $file_name = null;
         if ($file) {
             $file_name = Str::random(10) . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/files', $file_name);
+            $file->storeAs('company_presentations', $file_name);
         }
 
         DB::beginTransaction();
@@ -142,7 +142,7 @@ class AuthController extends Controller
                 'is_generate_revenue' => $fields['is_generate_revenue'],
                 'is_profitable' => $fields['is_profitable'],
                 'business_description' => $fields['business_description'],
-                'file' => $file_name ? 'files/' . $file_name : null,
+                'file' => $file_name ? 'company_presentations/' . $file_name : null,
             ]);
 
             DB::commit();
@@ -153,10 +153,4 @@ class AuthController extends Controller
 
         return $response->json($signup->toArray(), 'Register success');
     }
-
-    // public function getCsrfToken()
-    // {
-    //     $response = new Response();
-    //     return $response->json();
-    // }
 }

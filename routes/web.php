@@ -54,5 +54,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('categories', [CategoryController::class, 'index'])->name('category.index');
     Route::post('categories', [CategoryController::class, 'store'])->name('category.store');
 
-    Route::get('signups', [SignupController::class, 'index'])->name('signup.index');
+    Route::get('register', [SignupController::class, 'index'])->name('signup.index');
+    Route::get('register/download', [SignupController::class, 'downloadFile'])->name('signup.download');
 });
