@@ -137,6 +137,7 @@ class AuthController extends Controller
 
         DB::beginTransaction();
         try {
+            $token = Str::uuid()->toString();
             $signup = Signup::create([
                 'full_name' => $fields['full_name'],
                 'email' => $fields['email'],
@@ -149,7 +150,13 @@ class AuthController extends Controller
                 'is_profitable' => $fields['is_profitable'],
                 'business_description' => $fields['business_description'],
                 'file' => $file_name ? 'company_presentations/' . $file_name : null,
+                'token' => $token,
             ]);
+
+            // send email
+            $name = $signup->fullname;
+            $email = new SendEmailVerificationLink($name, $fields['email'], $token);
+            Mail::to($fields['email'])->send($email);
 
             DB::commit();
         } catch (\Exception $e) {

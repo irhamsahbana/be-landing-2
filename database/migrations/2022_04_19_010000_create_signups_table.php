@@ -26,6 +26,8 @@ return new class extends Migration
             $table->boolean('is_profitable')->default(false);
             $table->string('business_description');
             $table->string('file')->nullable();
+            $table->string('token')->nullable();
+            $table->timestamp('verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

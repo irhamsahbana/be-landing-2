@@ -9,7 +9,7 @@
     <h3>Verify Your Email Address</h3>
 
     <p>Hi {{ $name}}</p>
-    <p>Thank you for choosing Coach Cube.</p>
+    <p>Thank you for choosing Ayton Ventures.</p>
     <p>Please click the button below to verify your email</p>
 
     <p>
