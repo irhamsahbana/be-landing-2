@@ -17,6 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('full_name');
             $table->string('email');
+            $table->string('phone')->nullable();
             $table->string('company_name');
             $table->string('company_website');
             $table->integer('number_of_employees');

@@ -75,6 +75,8 @@ class AuthController extends Controller
         $rules = [
             'full_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email:rfc,dns', 'max:255'],
+            'email_confirmation' => ['required', 'string', 'email:rfc,dns', 'max:255', 'same:email'],
+            'phone' => ['nullable', 'string', 'max:255'],
             'company_name' => ['required', 'string', 'max:255'],
             'company_website' => ['required', 'string', 'max:255'],
             'number_of_employees' => ['required', 'integer', 'min:0'],
@@ -88,6 +90,7 @@ class AuthController extends Controller
         $messages = [
             'full_name.required' => '*name cannot be empty',
             'email.required' => '*email cannot be empty',
+            'email_confirmation.required' => '*email confirmation cannot be empty',
             'company_name.required' => '*company name cannot be empty',
             'company_website.required' => '*company website cannot be empty',
             'number_of_employees.required' => '*employees cannot be empty',
@@ -111,6 +114,8 @@ class AuthController extends Controller
             'business_description.max' => '*Business description cannot be more than 255 characters',
 
             'email.email' => '*email is not valid',
+            'email_confirmation.email' => '*email confirmation is not valid',
+            'email_confirmation.same' => '*email confirmation is not same as email',
             'number_of_employees.integer' => '*employees must be a number',
 
             'file.mimes' => '*file must be pdf, docx, pptx',
@@ -135,6 +140,7 @@ class AuthController extends Controller
             $signup = Signup::create([
                 'full_name' => $fields['full_name'],
                 'email' => $fields['email'],
+                'phone' => $fields['phone'],
                 'company_name' => $fields['company_name'],
                 'company_website' => $fields['company_website'],
                 'number_of_employees' => $fields['number_of_employees'],
