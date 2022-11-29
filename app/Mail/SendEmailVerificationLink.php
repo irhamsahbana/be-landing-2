@@ -38,7 +38,7 @@ class SendEmailVerificationLink extends Mailable
     {
         return new Envelope(
             subject: 'Email Verification',
-            from: new Address('sylvester@coach-cube.com', 'Coach Cube'),
+            from: new Address('sylvester@aytoncapital.com', 'Ayton Ventures'),
         );
     }
 

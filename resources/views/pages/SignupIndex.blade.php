@@ -21,12 +21,13 @@
                     </x-col>
 
                     <x-col>
-                        <x-table :thead="['Full Name', 'Email', 'Company Name', 'Employees', 'Capital Need', 'Generate Revenue', 'Profitable', 'Description', 'File', 'Created At', /*'Action'*/]">
+                        <x-table :thead="['Full Name', 'Email', 'Phone', 'Company Name', 'Employees', 'Capital Need', 'Generate Revenue', 'Profitable', 'Description', 'File', 'Created At', 'Verified At'/*'Action'*/]">
                             @foreach($data as $row)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->full_name }}</td>
                                     <td>{{ $row->email }}</td>
+                                    <td>{{ $row->phone }}</td>
                                     <td>{{ $row->company_name }}</td>
                                     <td>{{ $row->number_of_employees }}</td>
                                     <td>{{ $row->capital_raised }}</td>
@@ -39,27 +40,7 @@
                                         <td></td>
                                     @endif
                                     <td>{{ \Carbon\Carbon::parse($row->created_at)->timezone('Europe/London')->format('M d Y H:i:s') }}</td>
-                                    {{-- <td>
-                                        @if($hasAccessRead)
-                                            <a
-                                                href="{{ route('course-master.show', $row->id) }}"
-                                                class="btn btn-warning"
-                                                title="Ubah"><i class="fas fa-pencil-alt"></i></a>
-                                        @endif
-
-                                        @if($hasAccessDelete)
-                                            <form style=" display:inline!important;" method="POST" action="{{ route('course-master.destroy', $row->id) }}">
-                                                @csrf
-                                                @method('DELETE')
-
-                                                <button
-                                                    type="submit"
-                                                    class="btn btn-danger"
-                                                    onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"
-                                                    title="Hapus"><i class="fas fa-trash-alt"></i></button>
-                                            </form>
-                                        @endif
-                                    </td> --}}
+                                    <td>{{ $row->verified_at ? \Carbon\Carbon::parse($row->verified_at)->timezone('Europe/London')->format('M d Y H:i:s') : '' }}</td>
                                 </tr>
                             @endforeach
                         </x-table>

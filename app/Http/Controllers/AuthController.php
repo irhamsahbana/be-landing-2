@@ -44,6 +44,6 @@ class AuthController extends Controller
             $data->save();
         }
 
-        return redirect()->away("https://ayton-testing.vercel.app");
+        return redirect()->away("https://aytoncapital.com");
     }
 }
